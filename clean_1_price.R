@@ -57,9 +57,14 @@ price2 <- read.csv(paste0("data/price_",outName,"_clean1.csv"), header=T, sep=",
 
 
 ## 첫 칼럼 Date로
+# merge 할때, 각기 다른 파일의 칼럼명이 같으면 안됨!!!
 (nl <- names(price2))
 (names(price2) <- c("Date",nl[-1]))
 head(price2$Date,40)
+
+
+## 엑셀작업
+# Date 칼럼명 각기 다르게 하기
 
 ## 같은 형식으로 바꾸기
 # 년월은 as.Date()불가. 날짜 붙이는건 조작
