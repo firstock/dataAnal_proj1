@@ -3,17 +3,17 @@ setwd("E:/github/dataAnal_proj1/data")
 
 (file_list= list.files(pattern="*_clean2\\.csv$"))
 # 
-# dataset= data.frame()
-# names(dataset)[1]
-# for(file in file_list){
-#   print(file)
-#   temp= read.csv(file, header=T, sep=",")
-#   dataset <-  merge(x=dataset, y=temp, by="Date", all=TRUE)
-#   # dataset <-  merge(x=dataset, y=temp, by.x=names(dataset)[1], by.y=names(temp)[1], all=TRUE)
-# }
-# 
-# dataset[1]
-# 
+fileName <- "price_item_clean2.csv"#소비자물가지수(주요품목별)
+dataset <- read.csv(fileName, header=T, sep=",")
+names(dataset)[1]
+for(file in file_list[-1]){
+  print(file)
+  temp= read.csv(file, header=T, sep=",")
+  dataset <-  merge(dataset, temp, by="Date", all=T)
+}
+
+head(dataset,2)
+
 # dataFiles <- lapply(Sys.glob("*_clean2.csv", read.csv))
 # 
 # install.packages("dplyr")
