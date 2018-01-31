@@ -3,10 +3,17 @@ getwd()
 setwd("E:/github/dataAnal_proj1")
 priceMG <- read.csv("data/price_merge.csv")
 
-install.packages(c("caret","corrplot","FactoMineR"))
+
+install.packages(c("caret","corrplot","FactoMineR")) #상관계수
 library(caret)
 library(corrplot)
 library(FactoMineR)
+
+install.packages("Hmisc") #p-value
+library(Hmisc)
+
+
+
 
 names(priceMG)
 head(priceMG,1)
@@ -14,9 +21,6 @@ priceMG[is.na(priceMG),] #NA 없음
 
 length(priceMG)
 
-# # 예쁜 테이블보 디자인
-# priceMG_cr <- cor(priceMG[,2:length(priceMG)])
-# corrplot.mixed(priceMG_cr,lower="number",upper="color")
 
 ## corr 10개씩 보기. 총 103개  length(priceMG)
 # 근원물가: 97
@@ -51,4 +55,24 @@ priceMG_cr <- cor(priceMG[,c(97,seq(91,103))])
 corrplot.mixed(priceMG_cr,lower="number",upper="color")
 
 
+## 변수 전체 다
+priceMG_cr <- cor(priceMG[,2:length(priceMG)])
+# corrplot.mixed(priceMG_cr,lower="number",upper="color")
 
+price_pear <- rcorr(as.matrix(priceMG_cr), type="pearson")
+# head(price_pear)
+# str(price_pear)
+
+pearP_price <- subset(price_pear$P, select = 근원물가)
+pearR_price <- subset(price_pear$r, select = 근원물가)
+
+pearP_price[pearP_price<0.05,]
+pearR_price[abs(pearR_price)>0.7,]
+# write.csv(price_pear$P, "result/price_pear_P.csv")
+# write.csv(price_pear$r, "result/price_pear_r.csv")
+
+
+
+##
+mod <- lm(근원물가~ 개인서비스, data=priceMG)
+summary(mod)

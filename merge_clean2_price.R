@@ -17,14 +17,14 @@ head(dataset,2)
 str(dataset) #194 obs. of  105 variables
 
 # # 깔끔한데, 다룰줄 모름
-# install.packages("dplyr")
-# install.packages("readr")
-# library(dplyr)
-# library(readr)
-# 
-# list_file <- list.files(pattern="*_clean2.csv") %>%
-#   lapply(read.csv) %>%
-#   full_join
+install.packages("dplyr")
+install.packages("readr")
+library(dplyr)
+library(readr)
+
+list_file <- list.files(pattern="*_clean2.csv") %>%
+  as.data.frame(lapply(read.csv)) %>%
+  full_join
 
 # typeof(dataset) #list
 
