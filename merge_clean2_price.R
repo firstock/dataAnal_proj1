@@ -1,11 +1,12 @@
 # setwd("E:/github/dataAnal_proj1")
 setwd("E:/github/dataAnal_proj1/data")
 
+## file read & merge
 (file_list= list.files(pattern="*_clean2\\.csv$"))
-# 
+#
 fileName <- "price_item_clean2.csv"#소비자물가지수(주요품목별)
 dataset <- read.csv(fileName, header=T, sep=",")
-names(dataset)[1]
+names(dataset)
 for(file in file_list[-1]){
   print(file)
   temp= read.csv(file, header=T, sep=",")
@@ -13,9 +14,9 @@ for(file in file_list[-1]){
 }
 
 head(dataset,2)
+str(dataset) #194 obs. of  105 variables
 
-# dataFiles <- lapply(Sys.glob("*_clean2.csv", read.csv))
-# 
+# # 깔끔한데, 다룰줄 모름
 # install.packages("dplyr")
 # install.packages("readr")
 # library(dplyr)
@@ -23,43 +24,22 @@ head(dataset,2)
 # 
 # list_file <- list.files(pattern="*_clean2.csv") %>%
 #   lapply(read.csv) %>%
-#   
-# 
-# is.data.frame(list_file)
-# head(list_file[1])
+#   full_join
 
-# ## read files
-# dataset= data.frame()
-# for i,file in zip(1:length(file_list),file_list)){
-#   dataset[i] <- read.csv(file, header=T, sep=",")
-#   #warning 50개
-#   dataset= rbind(dataset, temp) #행 길이달라서 안됨
-# }
+# typeof(dataset) #list
 
-
-
-file <- file_list[1]
-price1 <- read.csv(file, header=T, sep=",")
-file <- file_list[2]
-price2 <- read.csv(file, header=T, sep=",")
-file <- file_list[3]
-price3 <- read.csv(file, header=T, sep=",")
-file <- file_list[4]
-price4 <- read.csv(file, header=T, sep=",")
-file <- file_list[5]
-price5 <- read.csv(file, header=T, sep=",")
-
-length(price1[,1])
-length(price2[,1])
-length(price3[,1])
-length(price4[,1])
-length(price5[,1])
-
-head(price1,1)
-head(price2,1)
-head(price3,1)
-head(price4,1)
-head(price5,1)
+## NA -> median
+date_temp <- dataset[1]
+dataset <- as.data.frame(lapply(dataset, function(x) {
+  ifelse(is.na(x), median(x, na.rm=TRUE), x)
+}))
+# dataset <- within(dataset, {
+#   val <- ifelse(is.na(val), median(val, na.rm=TRUE), val)
+# })
+dataset <- cbind.data.frame(date_temp,dataset[-1])
+head(dataset,2)
+str(dataset) #194 obs. of  105 variables:
 
 
-
+## file save - 실업률xy어쩔
+write.csv( dataset[,-grep("(실업자.y)|(실업률.y)",colnames(dataset))], "price_merge.csv", row.names=FALSE)
