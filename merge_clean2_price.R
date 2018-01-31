@@ -29,6 +29,7 @@ str(dataset) #194 obs. of  105 variables
 # typeof(dataset) #list
 
 ## NA -> median
+# date 칼럼을 날려버려서 temp로 두고 앞에 붙임
 date_temp <- dataset[1]
 dataset <- as.data.frame(lapply(dataset, function(x) {
   ifelse(is.na(x), median(x, na.rm=TRUE), x)
@@ -41,5 +42,5 @@ head(dataset,2)
 str(dataset) #194 obs. of  105 variables:
 
 
-## file save - 실업률xy어쩔
+## file save - 실업률xy어쩔. 일단 뒤쪽에거 날리자
 write.csv( dataset[,-grep("(실업자.y)|(실업률.y)",colnames(dataset))], "price_merge.csv", row.names=FALSE)
