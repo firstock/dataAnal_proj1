@@ -29,7 +29,7 @@ list_file <- list.files(pattern="*_clean2.csv") %>%
 # typeof(dataset) #list
 
 ## NA -> median
-# date 칼럼을 날려버려서 temp로 두고 앞에 붙임
+# date 칼럼을 밀어버리길래 temp로 두고 앞에 붙임
 date_temp <- dataset[1]
 dataset <- as.data.frame(lapply(dataset, function(x) {
   ifelse(is.na(x), median(x, na.rm=TRUE), x)
