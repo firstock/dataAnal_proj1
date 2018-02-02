@@ -5,11 +5,11 @@ setwd("E:/github/dataAnal_proj1")
 # library(lubridate) #날짜변환은 나중에 한꺼번에 하자
 
 file <- "data/seoul_price_item_200302_201712.csv"#소비자물가지수(주요품목별)
-# file <- "data/seoul_price_payaim_200302_201712.csv"#소비자물가지수(지출목적별). ok
+ file <- "data/seoul_price_payaim_200302_201712.csv"#소비자물가지수(지출목적별). ok
 # file <- "data/price_tot_200301_201712.csv"#소비자물가지수(개괄). ok
 # file <- "data/jobless_200301_201705.csv"#실업률. ok
 # file <- "data/youthemploy_200301_201712.csv"#청년. ok 고용동향
-
+ 
 price1 <- read.csv(file, header=T, sep=",") #, skip=1, skip=2
 head(price1,3)
 tail(price1,3)

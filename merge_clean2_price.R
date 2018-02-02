@@ -24,7 +24,10 @@ library(readr)
 
 list_file <- list.files(pattern="*_clean2.csv") %>%
   as.data.frame(lapply(read.csv)) %>%
-  full_join
+  full_join(by= "Date")
+
+??full_join
+
 
 # typeof(dataset) #list
 
