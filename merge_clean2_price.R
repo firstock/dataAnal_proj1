@@ -1,11 +1,11 @@
 # setwd("E:/github/dataAnal_proj1")
-setwd("E:/github/dataAnal_proj1/data")
+setwd("d:/github/dataAnal_proj1/data")
 
 ## file read & merge
 (file_list= list.files(pattern="*_clean2\\.csv$"))
 #
-fileName <- "price_item_clean2.csv"#소비자물가지수(주요품목별)
-dataset <- read.csv(fileName, header=T, sep=",")
+firstfileName <- "price_jobless_clean2.csv"#merge용 첫 파일
+dataset <- read.csv(firstfileName, header=T, sep=",")
 names(dataset)
 for(file in file_list[-1]){
   print(file)
@@ -16,17 +16,17 @@ for(file in file_list[-1]){
 head(dataset,2)
 str(dataset) #194 obs. of  105 variables
 
-# # 깔끔한데, 다룰줄 모름
-install.packages("dplyr")
-install.packages("readr")
-library(dplyr)
-library(readr)
-
-list_file <- list.files(pattern="*_clean2.csv") %>%
-  as.data.frame(lapply(read.csv)) %>%
-  full_join(by= "Date")
-
-??full_join
+# # # 깔끔한데, 다룰줄 모름
+# install.packages("dplyr")
+# install.packages("readr")
+# library(dplyr)
+# library(readr)
+# 
+# list_file <- list.files(pattern="*_clean2.csv") %>%
+#   as.data.frame(lapply(read.csv)) %>%
+#    full_join(by= "Date")
+# 
+# ??full_join
 
 
 # typeof(dataset) #list
@@ -42,7 +42,7 @@ dataset <- as.data.frame(lapply(dataset, function(x) {
 # })
 dataset <- cbind.data.frame(date_temp,dataset[-1])
 head(dataset,2)
-str(dataset) #194 obs. of  105 variables:
+str(dataset) #180 obs. of  66 variables:
 
 
 ## file save - 실업률xy어쩔. 일단 뒤쪽에거 날리자

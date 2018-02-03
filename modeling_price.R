@@ -1,9 +1,9 @@
 #### data 의미 분석
 getwd()
-setwd("E:/github/dataAnal_proj1")
+setwd("d:/github/dataAnal_proj1")
 priceMG <- read.csv("data/price_merge.csv")
 
-# install.packages("Hmisc") #p-value
+install.packages("Hmisc") #p-value
 library(Hmisc)
 
 
@@ -34,7 +34,7 @@ price_lm_cols <- c("근원물가","라면","달걀","맥주","휴대전화료","
 
 
 ## regsubsets - 최적 모형 무엇?
-# install.packages("leaps")
+install.packages("leaps")
 library(leaps)
 reg_m <- regsubsets(근원물가~., data=priceMG[,price_lm_cols]) #회귀1
 summary(reg_m)
@@ -50,20 +50,16 @@ price_reg_cols <- c("달걀","건설업","주류","우편서비스"
                     ,"소비자물가","공공서비스","개인서비스"
                     ,"생활물가")
 
-#3개: 달걀 소비자물가 
 
+### pValue/상관계수 plot
 
-
-
-### for check- pValue/상관계수 plot 그리고 싶은데..      
-
-# install.packages(c("caret","corrplot","FactoMineR")) #상관계수
+install.packages(c("caret","corrplot","FactoMineR")) #상관계수
 library(caret)
 library(corrplot)
 library(FactoMineR)
 
-# ----- error. out of bound
-price_star_cr <- cor(mod_star_val[,rownames(mod_star_val)])
+par(mfrow=c(1,1))
+price_star_cr <- cor(priceMG[,c("근원물가",price_reg_cols)])
 corrplot.mixed(price_star_cr,lower="number",upper="pie")
 
 # priceMG_cr <- cor(priceMG[,c(97,seq(2,10))])

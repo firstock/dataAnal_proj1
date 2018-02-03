@@ -1,12 +1,13 @@
 getwd()
-setwd("E:/github/dataAnal_proj1")
+setwd("d:/github/dataAnal_proj1")
 
 # install.packages("lubridate")
 # library(lubridate) #날짜변환은 나중에 한꺼번에 하자
 
-file <- "data/seoul_price_item_200302_201712.csv"#소비자물가지수(주요품목별)
- file <- "data/seoul_price_payaim_200302_201712.csv"#소비자물가지수(지출목적별). ok
-# file <- "data/price_tot_200301_201712.csv"#소비자물가지수(개괄). ok
+
+file <- "data/seoul_temperature_2003_2017.csv"#서울시 기상
+ # file <- "data/seoul_price_payaim_200302_201712.csv"#소비자물가지수(지출목적별). ok
+# file <- "data/price_tot_200301_201712.csv"#소비자물가지수(전국). ok
 # file <- "data/jobless_200301_201705.csv"#실업률. ok
 # file <- "data/youthemploy_200301_201712.csv"#청년. ok 고용동향
  
