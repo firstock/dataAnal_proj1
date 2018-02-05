@@ -1,16 +1,19 @@
 getwd()
-setwd("d:/github/dataAnal_proj1")
+# setwd("d:/github/dataAnal_proj1") #집
+setwd("e:/github/dataAnal_proj1") #학원
 
 # install.packages("lubridate")
 # library(lubridate) #날짜변환은 나중에 한꺼번에 하자
 
 
-file <- "data/seoul_temperature_2003_2017.csv"#서울시 기상
+file <- "data/jobless_200301_201705.csv"#실업률. ok
+# file <- "data/seoul_temperature_200301_201712.csv"#서울시 기상. ok
  # file <- "data/seoul_price_payaim_200302_201712.csv"#소비자물가지수(지출목적별). ok
 # file <- "data/price_tot_200301_201712.csv"#소비자물가지수(전국). ok
-# file <- "data/jobless_200301_201705.csv"#실업률. ok
 # file <- "data/youthemploy_200301_201712.csv"#청년. ok 고용동향
  
+
+### 특히 더러운 파일에 대해선, price1 코드는 최초 1번만 실행
 price1 <- read.csv(file, header=T, sep=",") #, skip=1, skip=2
 head(price1,3)
 tail(price1,3)
@@ -32,13 +35,15 @@ head(price1,1)
 names(price1)
 
 ## 특정 칼럼빼고 다시 저장
-outName <- "item"
-# "item", "tot", "payaim", "jobless", "youthemploy"
+outName <- "temperature"
+# "temperature", "tot", "payaim", "jobless", "youthemploy"
 
 
 ## 일반
 # write.csv( subset(price1, select= -구분 ), paste0("data/price_",outName,"_clean1.csv"), row.names=FALSE)
-write.csv( price1[,-grep("계|(구분)",colnames(price1))], paste0("data/price_",outName,"_clean1.csv"), row.names=FALSE)
+# write.csv( price1[ ,-grep("계|(구분)",colnames(price1))], paste0("data/price_",outName,"_clean1.csv"), row.names=FALSE)
+write.csv( price1[ ,-grep("지점",colnames(price1))], paste0("data/price_",outName,"_clean1.csv"), row.names=FALSE)
+# write.csv( price1, paste0("data/price_",outName,"_clean1.csv"), row.names=FALSE)
 ## transpose 했던거
 # write.csv( price1, paste0("data/price_",outName,"_clean1.csv"), row.names=FALSE)
 
@@ -47,18 +52,23 @@ write.csv( price1[,-grep("계|(구분)",colnames(price1))], paste0("data/price_"
 
 
 
-outName <- "youthemploy"
-# "item" # ok
+
+
+
+
+### merge 위한 밑작업
+
+outName <- "jobless"
+# "temperature" # ok
 # "tot" # ok
 # "payaim" #ok
-# "jobless" #ok
-# "youthemploy"
-### merge 위한 밑작업
+# "jobless"
+# "youthemploy" #ok
+
 price2 <- read.csv(paste0("data/price_",outName,"_clean1.csv"), header=T, sep=",")
 
 
 ## 첫 칼럼 Date로
-# merge 할때, 각기 다른 파일의 칼럼명이 같으면 안됨!!!
 (nl <- names(price2))
 (names(price2) <- c("Date",nl[-1]))
 head(price2$Date,40)
@@ -69,6 +79,14 @@ head(price2$Date,40)
 
 ## 같은 형식으로 바꾸기
 # 년월은 as.Date()불가. 날짜 붙이는건 조작
+
+
+## 특정 칼럼만 남기기
+#price2 <- price2[ ,c("Date", "소비자물가")] #tot 
+price2 <- price2[ ,c("Date", "청년실업률")] #jobless
+
+
+str(price2)
 
 # # item
 # reg_find <- "(\\d{4}).0?(\\d)"
@@ -93,10 +111,10 @@ price2$Date <- gsub(reg_find,reg_out,price2$Date)
 
 #
 
-
-
-
 head(price2$Date,40)
+
+
+
 
 
 
