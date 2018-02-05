@@ -4,5 +4,6 @@ money+	x
 
 del
 item
-tot> remain 청년실업률
-???> remain 소비자물가_y, 고용률
+jobless> remain 청년실업률
+tot> remain 소비자물가_y
+youthemploy> remain 고용률

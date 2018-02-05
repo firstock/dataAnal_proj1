@@ -30,17 +30,17 @@ summary(mod) #multiple R-squared: 0.9884 => 0.9457
 rownames(mod_star_val)
 
 head(mod_star_val)
-
-price_lm_cols <- c("소비자물가", "")
+  
+price_lm_cols <- c("소비자물가", "담배", "의류", "주택임차료", "외래환자서비스", "병원서비스", "운송장비", "우편서비스", "전화및팩스장비", "기타오락및문화용주요내구재", "오락및문화서비스", "유치원및초등교육", "기타교육", "기타개인용품", "기타서비스", "고용률")
 
 
 ## regsubsets - 최적 모형 무엇?
-install.packages("leaps")
+# install.packages("leaps")
 library(leaps)
 reg_m <- regsubsets(소비자물가~., data=priceMG[,price_lm_cols]) #회귀1
 summary(reg_m)
 
-par(mfrow=c(3,1))
+par(mfrow=c(1,1))
 plot(summary(reg_m)$adjr2)
 plot(reg_m) #ADJusted R squared. 설명력
 plot(reg_m, scale="r2")
