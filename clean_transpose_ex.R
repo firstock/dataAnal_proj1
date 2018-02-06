@@ -1,30 +1,74 @@
-getwd()
-# setwd("d:/github/dataAnal_proj1") #집
 setwd("e:/github/dataAnal_proj1") #학원
 
-# install.packages("lubridate")
-# library(lubridate) #날짜변환은 나중에 한꺼번에 하자
+file <- "data/youthemploy_200301_201712.csv"#청년. ok 고용동향
 
 
-file <- "data/jobless_200301_201705.csv"#실업률. ok
-# file <- "data/seoul_temperature_200301_201712.csv"#서울시 기상. ok
- # file <- "data/seoul_price_payaim_200302_201712.csv"#소비자물가지수(지출목적별). ok
-# file <- "data/price_tot_200301_201712.csv"#소비자물가지수(전국). ok
-# file <- "data/youthemploy_200301_201712.csv"#청년. ok 고용동향
- 
-
-### 특히 더러운 파일에 대해선, price1 코드는 최초 1번만 실행
-price1 <- read.csv(file, header=T, sep=",") #, skip=1, skip=2
-head(price1,3)
-tail(price1,3)
-names(price1)
+## 읽기
+data <- read.csv(file, header=T, sep=",",skip=2, stringsAsFactor = F) 
+head(data,1)
+tail(data,3)
+names(data)
 
 ## 문자, 컬럼명에 자잘한거 지우기
-# item
-price1$외래진료비 <- gsub('\\s*-\\s*','',price1$외래진료비)
-# names(price1) <- gsub('\\.|ㆍ','',names(price1)) #일반
-names(price1) <- gsub('[^ㄱ-힣a-zA-Z0-9 ]|X','',names(price1)) #transepose. 월
-names(price1)
+# names(data) <- gsub('\\.|ㆍ','',names(data)) #일반
+names(data) <- gsub('[^ㄱ-힣a-zA-Z0-9 ]|X|월','',names(data)) #transepose. 월
+names(data)
+
+dim(data)
+str(data)
+
+data[1]
+(realName <- data[1])
+is.data.frame(realName)
+
+(dataBody <- data[,2:181])
+dataBody <- t(as.matrix(dataBody))
+head(dataBody,1)
+
+
+colnames(dataBody) <- realName
+str(colnames)
+
+dataBody
+
+########## fail. 뭘더 시도해야 하나?
+
+
+
+# ## 현수코드
+# data <- read.csv("youthemploy_200301_201712_원본.csv", header = T,skip=2, stringsAsFactor = F)
+data <- t(as.matrix(data))
+dim(data)
+str(data)
+head(data)
+
+data <- unname(data, force = F) # attribute 속성 제거
+data <- data.frame(data)
+str(data)
+data <- cbind(realName,data[2:181,])
+# colnames(data) <- c("생산가능인구", "경제활동인구", "취업자", "실업자", "실업률", "고용률", "경제활동참가율")
+colnames(data) <- realName
+str(data)
+names(data)
+date <- seq(as.Date("2003-01-01"), as.Date("2017-12-01"), by="month")
+data$date <- seq(as.Date("2003-01-01"), as.Date("2017-12-01"), by="month")
+# write.csv(data, "final.csv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### ## r dataframe Transpose. 첫줄 X1,2,3 들어간거 지우기
 # temp_colname <- names(price1)

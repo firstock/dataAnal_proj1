@@ -1,0 +1,9 @@
+add
+temperature	o
+money+	x
+
+del
+item
+jobless> remain 청년실업률
+tot> remain 소비자물가_y
+youthemploy> remain 고용률
