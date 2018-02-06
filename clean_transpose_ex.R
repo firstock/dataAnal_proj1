@@ -3,36 +3,51 @@ setwd("e:/github/dataAnal_proj1") #학원
 file <- "data/youthemploy_200301_201712.csv"#청년. ok 고용동향
 
 
-### 특히 더러운 파일에 대해선, price1 코드는 최초 1번만 실행
-price1 <- read.csv(file, header=T, sep=",",skip=2, stringsAsFactor = F) 
-head(price1,3)
-tail(price1,3)
-names(price1)
+## 읽기
+data <- read.csv(file, header=T, sep=",",skip=2, stringsAsFactor = F) 
+head(data,1)
+tail(data,3)
+names(data)
 
 ## 문자, 컬럼명에 자잘한거 지우기
-# names(price1) <- gsub('\\.|ㆍ','',names(price1)) #일반
-names(price1) <- gsub('[^ㄱ-힣a-zA-Z0-9 ]|X|월','',names(price1)) #transepose. 월
-names(price1)
+# names(data) <- gsub('\\.|ㆍ','',names(data)) #일반
+names(data) <- gsub('[^ㄱ-힣a-zA-Z0-9 ]|X|월','',names(data)) #transepose. 월
+names(data)
 
-dim(price1)
-str(price1)
+dim(data)
+str(data)
+
+data[1]
+(realName <- data[1])
+is.data.frame(realName)
+
+(dataBody <- data[,2:181])
+dataBody <- t(as.matrix(dataBody))
+head(dataBody,1)
 
 
+colnames(dataBody) <- realName
+str(colnames)
+
+dataBody
+
+########## fail. 뭘더 시도해야 하나?
 
 
 
 # ## 현수코드
-data <- read.csv("youthemploy_200301_201712_원본.csv", header = T,skip=2, stringsAsFactor = F)
+# data <- read.csv("youthemploy_200301_201712_원본.csv", header = T,skip=2, stringsAsFactor = F)
 data <- t(as.matrix(data))
 dim(data)
-# write.csv(t(data), "transpose.csv")
-######################################################
 str(data)
+head(data)
+
 data <- unname(data, force = F) # attribute 속성 제거
 data <- data.frame(data)
 str(data)
-data <- data[2:181,]
-colnames(data) <- c("생산가능인구", "경제활동인구", "취업자", "실업자", "실업률", "고용률", "경제활동참가율")
+data <- cbind(realName,data[2:181,])
+# colnames(data) <- c("생산가능인구", "경제활동인구", "취업자", "실업자", "실업률", "고용률", "경제활동참가율")
+colnames(data) <- realName
 str(data)
 names(data)
 date <- seq(as.Date("2003-01-01"), as.Date("2017-12-01"), by="month")
