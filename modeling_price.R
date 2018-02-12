@@ -1,7 +1,11 @@
 #### data 의미 분석
 getwd()
-# setwd("d:/github/dataAnal_proj1") #집
-setwd("e:/github/dataAnal_proj1") #학원
+# setwd("E:/github/dataAnal_proj1") #학원
+setwd("D:/github/dataAnal_proj1") #집
+
+# source("clean_1_price.R")
+# source("merge_clean2_price.R")
+
 priceMG <- read.csv("data/price_merge.csv")
 
 # install.packages("Hmisc") #p-value
@@ -11,7 +15,7 @@ library(Hmisc)
 str(priceMG)
 names(priceMG)
 head(priceMG,2)
-priceMG[is.na(priceMG),] #NA 없음
+priceMG[is.na(priceMG),] #NA 없음 
 
 ncol(priceMG)
 
@@ -34,8 +38,9 @@ head(mod_star_val)
 price_lm_cols <- c("소비자물가", "담배", "의류", "주택임차료", "외래환자서비스", "병원서비스", "운송장비", "우편서비스", "전화및팩스장비", "기타오락및문화용주요내구재", "오락및문화서비스", "유치원및초등교육", "기타교육", "기타개인용품", "기타서비스", "고용률")
 
 
+
 ## regsubsets - 최적 모형 무엇?
-# install.packages("leaps")
+install.packages("leaps")
 library(leaps)
 reg_m <- regsubsets(소비자물가~., data=priceMG[,price_lm_cols]) #회귀1
 summary(reg_m)
