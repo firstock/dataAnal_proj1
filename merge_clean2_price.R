@@ -4,7 +4,7 @@ setwd("e:/github/dataAnal_proj1/data") #학원
 ## file read & merge
 (file_list= list.files(pattern="*_clean2\\.csv$"))
 #
-firstfileName <- "price_jobless_clean2.csv"#merge용 첫 파일
+firstfileName <- file_list[1]#merge용 첫 파일
 dataset <- read.csv(firstfileName, header=T, sep=",")
 names(dataset)
 for(file in file_list[-1]){
